@@ -1,6 +1,22 @@
+:root {
+  --background-color: #bdddfc;
+  --nav-color: rgb(40, 30, 10);
+  --text-color2: #384959;
+}
 body {
+  background: var(--background-color);
   margin: 0;
   padding: 0;
+}
+#logo {
+  color: var(--background-color);
+}
+
+hr {
+  border: none;
+  height: 2px;
+  margin: 0;
+  background-color: var(--nav-color);
 }
 
 .nav {
@@ -9,15 +25,46 @@ body {
   align-items: center;
 }
 
+.nav.top {
+  background: var(--nav-color);
+}
+.nav.bot {
+  color: var(--text-color2);
+  margin: 10px 0;
+}
 #search-bar {
   width: 400px;
-  height: 30px;
   border-radius: 3px;
   border: 0.5px solid black;
 }
 
+#find {
+  width: 100px;
+  border: 0.5px solid black;
+}
+
+.select {
+  width: 130px;
+}
+
+#search-wrap > * {
+  height: 100%;
+  background: var(--background-color);
+  color: var(--text-color2);
+  border: 0.5px solid black;
+  border-radius: 3px;
+}
+
+#search-wrap {
+  display: flex;
+  align-items: center;
+  height: 30px;
+  gap: 10px;
+}
+
 a {
   text-decoration: none;
+  color: var(--text-color1);
 }
 
 .grid {
@@ -32,4 +79,77 @@ a {
   border: 0.5px solid black;
   width: 200px;
   height: 300px;
+}
+
+#profile-banner {
+  padding-top: 50px;
+  display: flex;
+  align-items: flex-end;
+}
+
+#profile-wrap {
+  display: flex;
+  gap: 20px;
+  margin: auto auto 20px 20px;
+}
+
+.profile-circle {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 0.5px solid black;
+  background: white;
+}
+
+.description {
+  display: flex;
+  flex-direction: column;
+}
+
+#add-icon {
+  width: 100%;
+  height: 100%;
+  color: var(--background-color);
+  margin: 0;
+  padding: 0;
+}
+
+#account-icon {
+  width: 80%;
+  height: 80%;
+  color: var(--background-color);
+}
+
+.icon-wrapper {
+  display: flex;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+}
+
+.nav-icons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.form {
+  display: flex;
+  width: 500px;
+  height: 300px;
+  margin: auto;
+  flex-direction: column;
+  align-items: center;
+  border: 0.5px solid black;
+  gap: 10px;
+}
+
+.form-input {
+  width: 60%;
+  height: 25px;
+}
+
+.feed-buttons {
+  background: none;
+  border: none;
 }

@@ -14,7 +14,7 @@ function NavBar() {
     <>
       <div className="nav top">
         <Link to="/">
-          <h1 id="logo">Vacay.</h1>
+          <h1 id="logo">Dango</h1>
         </Link>
         <SearchBar />
         <div className="nav-icons">

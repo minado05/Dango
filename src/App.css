@@ -84,7 +84,8 @@ a {
 #profile-banner {
   padding-top: 50px;
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
+  justify-content: space-between;
 }
 
 #profile-wrap {
@@ -104,6 +105,10 @@ a {
 .description {
   display: flex;
   flex-direction: column;
+}
+
+#sign-out-button {
+  margin-right: 20px;
 }
 
 #add-icon {

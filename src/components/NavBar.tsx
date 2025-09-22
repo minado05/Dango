@@ -3,10 +3,16 @@ import { Link } from "react-router-dom";
 import { CiSquarePlus } from "react-icons/ci";
 import { VscAccount } from "react-icons/vsc";
 import { useNavigate } from "react-router-dom";
+import { auth } from "../firebase";
 
 function NavBar() {
   const navigate = useNavigate();
+  const user = auth.currentUser;
   function addPost() {
+    if (user) {
+      alert("Start posting");
+      return;
+    }
     alert("Please sign in to start posting!");
     navigate("/signin");
   }

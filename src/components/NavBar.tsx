@@ -16,6 +16,13 @@ function NavBar() {
     alert("Please sign in to start posting!");
     navigate("/signin");
   }
+  const handleAccount = () => {
+    if (user) {
+      navigate("/account");
+      return;
+    }
+    navigate("/signin");
+  };
   return (
     <>
       <div className="nav top">
@@ -27,9 +34,9 @@ function NavBar() {
           <div className="icon-wrapper" id="add-post" onClick={addPost}>
             <CiSquarePlus id="add-icon" />
           </div>
-          <Link className="icon-wrapper" to="/account">
+          <div className="icon-wrapper" onClick={handleAccount}>
             <VscAccount id="account-icon" />
-          </Link>
+          </div>
         </div>
       </div>
     </>

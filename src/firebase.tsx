@@ -2,13 +2,13 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCMHsINLAFxp_G-ou_2dqorjMLr0kk4tMc",
-  authDomain: "vacay-a87fa.firebaseapp.com",
-  projectId: "vacay-a87fa",
-  storageBucket: "vacay-a87fa.firebasestorage.app",
-  messagingSenderId: "712552147196",
-  appId: "1:712552147196:web:f88dcf57316be2d7764f79",
-  measurementId: "G-WW2L1YWPSR",
+  apiKey: "AIzaSyBp5fpw5ay3LjOfQo661tZ85xv-5qr9JEc",
+  authDomain: "dango-a380a.firebaseapp.com",
+  projectId: "dango-a380a",
+  storageBucket: "dango-a380a.firebasestorage.app",
+  messagingSenderId: "338827472716",
+  appId: "1:338827472716:web:ab6a2404fa2e00ab3729e9",
+  measurementId: "G-54WKBV22B9",
 };
 
 const app = initializeApp(firebaseConfig);

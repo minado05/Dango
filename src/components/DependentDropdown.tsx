@@ -1,7 +1,6 @@
-import { FiSearch } from "react-icons/fi";
 import { useState } from "react";
 
-function SearchBar() {
+const DependentDropdown = () => {
   const regions = [
     { id: 1, name: "Asia" },
     { id: 2, name: "Europe" },
@@ -36,42 +35,36 @@ function SearchBar() {
     const city = e.target.value;
     setSelectedCity(city);
   };
-  return (
-    <>
-      <form id="search-wrap">
-        {/* region dropdown */}
-        <select id="region" value={selectedRegion} onChange={handleRegionChange}>
-          <option value="">Select a region</option>
-          {regions.map((region) => (
-            <option key={region.id} value={region.name}>
-              {region.name}
-            </option>
-          ))}
-        </select>
-        {/* country dropdown */}
-        <select id="country" value={selectedCountry} onChange={handleCountryChange}>
-          <option value="">Select a country</option>
-          {availableCountries.map((country) => (
-            <option key={country} value={country}>
-              {country}
-            </option>
-          ))}
-        </select>
-        {/* city dropdown */}
-        <select id="city" value={selectedCity} onChange={handleCityChange}>
-          <option value="">Select a city</option>
-          {availableCities.map((city) => (
-            <option key={city} value={city}>
-              {city}
-            </option>
-          ))}
-        </select>
-        <button id="find" type="submit">
-          <FiSearch />
-        </button>
-      </form>
-    </>
-  );
-}
 
-export default SearchBar;
+  return (
+    <div>
+      {/* region dropdown */}
+      <select id="region" value={selectedRegion} onChange={handleRegionChange}>
+        <option value="">Select a region</option>
+        {regions.map((region) => (
+          <option key={region.id} value={region.name}></option>
+        ))}
+      </select>
+      {/* country dropdown */}
+      <select id="country" value={selectedCountry} onChange={handleCountryChange}>
+        <option value="">Select a country</option>
+        {availableCountries.map((country) => (
+          <option key={country} value={country}>
+            {country}
+          </option>
+        ))}
+      </select>
+      {/* city dropdown */}
+      <select id="city" value={selectedCity} onChange={handleCityChange}>
+        <option value="">Select a city</option>
+        {availableCities.map((city) => (
+          <option key={city} value={city}>
+            {city}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+};
+
+export default DependentDropdown;

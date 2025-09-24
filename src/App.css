@@ -39,15 +39,21 @@ hr {
 }
 
 #find {
-  width: 100px;
-  border: 0.5px solid black;
+  width: fit-content;
+  background: transparent;
+  border: none;
+}
+
+#find > svg {
+  color: var(--background-color);
+  font-size: 20px;
 }
 
 .select {
   width: 130px;
 }
 
-#search-wrap > * {
+#search-wrap > *:not(#find) {
   height: 100%;
   background: var(--background-color);
   color: var(--text-color2);

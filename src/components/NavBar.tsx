@@ -10,7 +10,7 @@ function NavBar() {
   const user = auth.currentUser;
   function addPost() {
     if (user) {
-      alert("Start posting");
+      navigate("/addpost");
       return;
     }
     alert("Please sign in to start posting!");
@@ -23,6 +23,7 @@ function NavBar() {
     }
     navigate("/signin");
   };
+
   return (
     <>
       <div className="nav top">

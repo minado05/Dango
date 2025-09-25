@@ -1,18 +1,8 @@
 import { FiSearch } from "react-icons/fi";
 import { useState } from "react";
+import { regions, countries, cities } from "../data/locations";
 
 function SearchBar() {
-  const regions = [
-    { id: 1, name: "Asia" },
-    { id: 2, name: "Europe" },
-  ];
-  const countries: Record<string, string[]> = { Asia: ["Japan", "China"], Europe: ["UK"] };
-  const cities: Record<string, string[]> = {
-    Japan: ["Tokyo", "Kyoto"],
-    China: ["Shanghai", "Beijing"],
-    UK: ["London"],
-  };
-
   //states to hold selected region, country, city, and other region, country
   const [selectedRegion, setSelectedRegion] = useState("");
   const [availableCountries, setAvailableCountries] = useState<string[]>([]);

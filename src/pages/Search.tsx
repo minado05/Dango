@@ -13,6 +13,7 @@ interface PostDetails {
   caption: string;
   date: Timestamp;
   likes: number;
+  postId: string;
 }
 
 function Search() {
@@ -34,6 +35,7 @@ function Search() {
           caption: post.caption,
           date: post.date,
           likes: post.likes,
+          postId: doc.id,
         });
       });
       setResultList(postArray);

@@ -207,16 +207,20 @@ a {
   gap: 10px;
 }
 .likes {
-  background: none;
   display: flex;
   align-items: center;
   height: fit-content;
-  padding: 0;
-  border: none;
   gap: 5px;
 }
 
-.likes > svg {
+.like-button {
+  display: flex;
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+.like-button > svg {
   font-size: 20px;
   margin: 0;
   padding: 0;

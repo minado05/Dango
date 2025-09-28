@@ -14,6 +14,7 @@ interface PostDetails {
   date: Timestamp;
   likes: number;
   postId: string;
+  postuid: string;
 }
 
 function Search() {
@@ -36,6 +37,7 @@ function Search() {
           date: post.date,
           likes: post.likes,
           postId: doc.id,
+          postuid: post.uid,
         });
       });
       setResultList(postArray);
@@ -46,7 +48,7 @@ function Search() {
   return (
     <>
       <NavBar />
-      <div id="search-results-container">
+      <div className="post-grid">
         {resultList.map((post) => (
           <PostCard post={post} />
         ))}

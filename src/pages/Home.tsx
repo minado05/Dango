@@ -1,10 +1,10 @@
 import NavBar from "../components/NavBar";
-import ExploreFeed from "../components/ExploreFeed";
 import FollowingFeed from "../components/FollowingFeed";
 import { useState } from "react";
+import TrendingFeed from "../components/TrendingFeed";
 function Home() {
   const [followFeed, setFollowFeed] = useState(true);
-  const [exploreFeed, setExploreFeed] = useState(false);
+  const [trendingFeed, setExploreFeed] = useState(false);
 
   function followFeedOn() {
     if (followFeed) return;
@@ -13,7 +13,7 @@ function Home() {
   }
 
   function exploreFeedOn() {
-    if (exploreFeed) return;
+    if (trendingFeed) return;
     setExploreFeed(true);
     setFollowFeed(false);
   }
@@ -26,10 +26,10 @@ function Home() {
           Following
         </button>
         <button className="feed-buttons" onClick={exploreFeedOn}>
-          Explore
+          Trending
         </button>
       </div>
-      {exploreFeed ? <ExploreFeed /> : <FollowingFeed />}
+      {trendingFeed ? <TrendingFeed /> : <FollowingFeed />}
     </>
   );
 }

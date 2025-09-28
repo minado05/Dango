@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { FiHeart } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
 import { db, auth } from "../firebase";
+import { useNavigate } from "react-router-dom";
 
 // Define the interface first
 export interface PostDetails {
@@ -21,6 +22,7 @@ export interface PostDetails {
   date: Timestamp;
   likes: number;
   postId: string;
+  postuid: string;
 }
 
 // Define the props for your component
@@ -30,6 +32,7 @@ interface PostProps {
 
 // Component
 function PostCard({ post }: PostProps) {
+  const navigate = useNavigate();
   const [saved, setSaved] = useState(false);
   const [likes, setLikes] = useState(post.likes);
   const user = auth.currentUser;
@@ -68,7 +71,10 @@ function PostCard({ post }: PostProps) {
     <div className="post-container">
       <div className="post-top-bar">
         <div className="user-info">
-          <div className="post-profile-circle"></div>
+          <div
+            className="post-profile-circle"
+            onClick={() => navigate(`/account/${post.postuid}`)}
+          ></div>
           <div>{post.name}</div>
         </div>
         <div className="likes">

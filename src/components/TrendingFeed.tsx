@@ -16,6 +16,7 @@ interface PostDetails {
 
 function TrendingFeed() {
   const [trendingList, setTrendingList] = useState<PostDetails[]>([]);
+
   useEffect(() => {
     const getTrendingList = async () => {
       const q = query(collection(db, "posts"), orderBy("likes", "desc"), limit(10));
@@ -33,8 +34,8 @@ function TrendingFeed() {
           postId: doc.id,
           postuid: post.uid,
         });
-        setTrendingList(trendArray);
       });
+      setTrendingList(trendArray);
     };
     getTrendingList();
   }, [trendingList]);
@@ -42,7 +43,7 @@ function TrendingFeed() {
   return (
     <div className="post-grid">
       {trendingList.map((post) => (
-        <PostCard post={post} />
+        <PostCard key={post.postId} post={post} />
       ))}
     </div>
   );

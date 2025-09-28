@@ -37,7 +37,19 @@ function PostCard({ post }: PostProps) {
   const [likes, setLikes] = useState(post.likes);
   const user = auth.currentUser;
   const uid = user ? user.uid : null;
-
+  const [profilePic, setProfilePic] = useState<string>();
+  //get profile pic of the post
+  useEffect(() => {
+    const getProfilePic = async () => {
+      const profileSnap = await getDoc(doc(db, "users", post.postuid));
+      if (profileSnap.exists()) {
+        const profile = profileSnap.data();
+        setProfilePic(profile.image);
+      }
+    };
+    getProfilePic();
+  });
+  //check if saved
   useEffect(() => {
     if (uid == null) {
       return;
@@ -47,7 +59,7 @@ function PostCard({ post }: PostProps) {
       setSaved(docSnap.exists());
     };
     checkSaved();
-  }, [post.postId, uid]);
+  }, [post.postId, uid, profilePic]);
 
   const toggleSaved = async (postId: string) => {
     if (uid == null) {
@@ -71,10 +83,11 @@ function PostCard({ post }: PostProps) {
     <div className="post-container">
       <div className="post-top-bar">
         <div className="user-info">
-          <div
+          <img
+            src={profilePic}
             className="post-profile-circle"
             onClick={() => navigate(`/account/${post.postuid}`)}
-          ></div>
+          />
           <div>{post.name}</div>
         </div>
         <div className="likes">

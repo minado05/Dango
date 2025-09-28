@@ -1,15 +1,23 @@
-import { useState } from "react";
-import NavBar from "../components/NavBar";
+import { useEffect, useState } from "react";
 import { auth, db, storage } from "../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { doc, updateDoc } from "firebase/firestore";
-const user = auth.currentUser;
+import { Link } from "react-router-dom";
+import { IoIosArrowBack } from "react-icons/io";
+import { onAuthStateChanged, type User } from "firebase/auth";
 
 function UpdateProfile() {
   const [image, setImage] = useState<{ file: File; preview: string }>();
   const [bio, setBio] = useState<string>();
-  if (user == null) return;
+  const [user, setUser] = useState<User | null>(null);
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe(); // cleanup listener
+  }, []);
+  if (user == null) return;
   const userRef = doc(db, "users", user.uid);
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
@@ -32,7 +40,6 @@ function UpdateProfile() {
       await updateDoc(userRef, {
         image: url,
       });
-      console.log("here");
     }
     //update bio if bio exists
     if (bio) {
@@ -43,7 +50,12 @@ function UpdateProfile() {
   };
   return (
     <div>
-      <NavBar />
+      <div className="back-arrow">
+        <Link to={`/account/${user.uid}`}>
+          <IoIosArrowBack />
+          Account
+        </Link>
+      </div>
       <form className="form" onSubmit={handleSubmit}>
         <h2>Update Profile</h2>
         <label>Choose Profile Image: </label>

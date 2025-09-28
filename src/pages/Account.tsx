@@ -25,7 +25,7 @@ function Account() {
   const [isUser, setIsUser] = useState(false);
   const [profileName, setProfileName] = useState("");
   const [profileBio, setProfileBio] = useState("");
-  const [profileImage, setProfileImage] = useState("");
+  const [profileImage, setProfileImage] = useState<string>();
   const navigate = useNavigate();
   useEffect(() => {
     if (user == null || profileId == null) return;
@@ -77,33 +77,34 @@ function Account() {
     if (user == null || profileId == null) return;
     const followingRef = doc(db, "users", user.uid, "following", profileId);
     await setDoc(followingRef, {});
+    alert("Follow successful!");
   };
 
   return (
     <>
-      <div id="back-arrow">
+      <div className="back-arrow">
         <Link to="/">
           <IoIosArrowBack />
           Home
         </Link>
-        <div id="profile-banner">
-          <div id="profile-wrap">
-            <img src={profileImage} className="profile-circle" />
-            <div className="description">
-              <div id="name">Name: {profileName}</div>
-              <div id="userid">Dango ID: {profileId ? profileId : ""}</div>
-              <div id="bio">Bio: {profileBio} </div>
-              {isUser ? (
-                <button onClick={() => navigate("/updateprofile")}>Update Profile</button>
-              ) : (
-                <button onClick={handleFollow}>Follow</button>
-              )}
-            </div>
+      </div>
+      <div id="profile-banner">
+        <div id="profile-wrap">
+          <img src={profileImage} className="profile-circle" />
+          <div className="description">
+            <div id="name">Name: {profileName}</div>
+            <div id="userid">Dango ID: {profileId ? profileId : ""}</div>
+            <div id="bio">Bio: {profileBio} </div>
+            {isUser ? (
+              <button onClick={() => navigate("/updateprofile")}>Update Profile</button>
+            ) : (
+              <button onClick={handleFollow}>Follow</button>
+            )}
           </div>
-          <button id="sign-out-button" onClick={handleSignOut}>
-            Sign out
-          </button>
         </div>
+        <button id="sign-out-button" onClick={handleSignOut}>
+          Sign out
+        </button>
       </div>
       <hr></hr>
       <div className="nav bot">
@@ -112,7 +113,7 @@ function Account() {
       </div>
       <div className="post-grid">
         {posts.map((post) => (
-          <PostCard post={post} />
+          <PostCard key={post.postId} post={post} />
         ))}
       </div>
     </>

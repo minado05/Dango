@@ -3,8 +3,8 @@ import FollowingFeed from "../components/FollowingFeed";
 import { useState } from "react";
 import TrendingFeed from "../components/TrendingFeed";
 function Home() {
-  const [followFeed, setFollowFeed] = useState(true);
-  const [trendingFeed, setExploreFeed] = useState(false);
+  const [followFeed, setFollowFeed] = useState(false);
+  const [trendingFeed, setExploreFeed] = useState(true);
 
   function followFeedOn() {
     if (followFeed) return;

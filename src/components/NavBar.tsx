@@ -8,6 +8,7 @@ import { auth } from "../firebase";
 function NavBar() {
   const navigate = useNavigate();
   const user = auth.currentUser;
+  const uid = user ? user.uid : "";
   function addPost() {
     if (user) {
       navigate("/addpost");
@@ -18,7 +19,7 @@ function NavBar() {
   }
   const handleAccount = () => {
     if (user) {
-      navigate("/account");
+      navigate(`/account/${uid}`);
       return;
     }
     navigate("/signin");

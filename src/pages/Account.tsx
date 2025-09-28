@@ -78,9 +78,9 @@ function Account() {
           <div id="profile-wrap">
             <div className="profile-circle"></div>
             <div className="description">
-              <div id="name">name: {user ? user.displayName : "error"}</div>
+              <div id="name">Name: {user ? user.displayName : "error"}</div>
               <div id="userid">User Id: {profileId ? profileId : "error"}</div>
-              <div id="bio">bio: </div>
+              <div id="bio">Bio: </div>
               <button onClick={handleFollow}>Follow</button>
             </div>
           </div>

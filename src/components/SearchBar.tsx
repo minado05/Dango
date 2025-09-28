@@ -1,8 +1,11 @@
 import { FiSearch } from "react-icons/fi";
 import { useState } from "react";
 import { regions, countries, cities } from "../data/locations";
+import { useNavigate } from "react-router-dom";
 
 function SearchBar() {
+  const navigate = useNavigate();
+
   //states to hold selected region, country, city, and other region, country
   const [selectedRegion, setSelectedRegion] = useState("");
   const [availableCountries, setAvailableCountries] = useState<string[]>([]);
@@ -26,9 +29,14 @@ function SearchBar() {
     const city = e.target.value;
     setSelectedCity(city);
   };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    navigate(`/search?query=${selectedCity}`);
+  };
   return (
     <>
-      <form id="search-wrap">
+      <form id="search-wrap" onSubmit={handleSubmit}>
         {/* region dropdown */}
         <select id="region" value={selectedRegion} onChange={handleRegionChange}>
           <option value="">Select a region</option>

@@ -80,9 +80,15 @@ const AddPost = () => {
           })}
         </div>
         <label>Add location: </label>
-        <input type="text" placeholder="add location..." onChange={handleLocationChange} required />
+        <input
+          value={location}
+          type="text"
+          placeholder="add location..."
+          onChange={handleLocationChange}
+          required
+        />
         <label>Add Caption: </label>
-        <textarea onChange={handleCaptionChange} />
+        <textarea value={caption} onChange={handleCaptionChange} />
         <button type="submit">upload</button>
       </form>
     </div>

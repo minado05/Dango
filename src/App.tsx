@@ -7,6 +7,7 @@ import AddPost from "./pages/AddPost";
 import Search from "./pages/Search";
 
 import { Routes, Route } from "react-router-dom";
+import UpdateProfile from "./pages/UpdateProfile";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Route path="/signup" element={<SignUp />} />
       <Route path="/addpost" element={<AddPost />} />
       <Route path="/search" element={<Search />} />
+      <Route path="/updateprofile" element={<UpdateProfile />} />
     </Routes>
   );
 }

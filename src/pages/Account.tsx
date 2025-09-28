@@ -18,16 +18,28 @@ interface PostDetails {
 }
 
 function Account() {
+  const user = auth.currentUser;
   const params = useParams<{ profileId: string }>();
   const profileId = params.profileId;
   const [posts, setPosts] = useState<PostDetails[]>([]);
+  const [isUser, setIsUser] = useState(false);
+  const [profileName, setProfileName] = useState("");
+  const [profileBio, setProfileBio] = useState("");
+  const [profileImage, setProfileImage] = useState("");
   const navigate = useNavigate();
-  const user = auth.currentUser;
-  // TODO: fix name of profile user
   useEffect(() => {
     if (user == null || profileId == null) return;
+    if (user.uid == profileId) setIsUser(true);
     const getPosts = async () => {
-      const postIdsRef = collection(db, "users", profileId, "posts");
+      const profileRef = doc(db, "users", profileId);
+      const profileSnap = await getDoc(profileRef);
+      if (profileSnap.exists()) {
+        const profile = profileSnap.data();
+        setProfileName(profile.name);
+        setProfileBio(profile.bio);
+        setProfileImage(profile.image);
+      }
+      const postIdsRef = collection(profileRef, "posts");
       const queryPostIdSnapshot = await getDocs(postIdsRef);
       const postIdArray: string[] = [];
       queryPostIdSnapshot.forEach((post) => {
@@ -76,12 +88,16 @@ function Account() {
         </Link>
         <div id="profile-banner">
           <div id="profile-wrap">
-            <div className="profile-circle"></div>
+            <img src={profileImage} className="profile-circle" />
             <div className="description">
-              <div id="name">Name: {user ? user.displayName : "error"}</div>
-              <div id="userid">User Id: {profileId ? profileId : "error"}</div>
-              <div id="bio">Bio: </div>
-              <button onClick={handleFollow}>Follow</button>
+              <div id="name">Name: {profileName}</div>
+              <div id="userid">Dango ID: {profileId ? profileId : ""}</div>
+              <div id="bio">Bio: {profileBio} </div>
+              {isUser ? (
+                <button onClick={() => navigate("/updateprofile")}>Update Profile</button>
+              ) : (
+                <button onClick={handleFollow}>Follow</button>
+              )}
             </div>
           </div>
           <button id="sign-out-button" onClick={handleSignOut}>

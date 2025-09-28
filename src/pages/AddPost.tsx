@@ -44,7 +44,7 @@ const AddPost = () => {
     await setDoc(userRef, { posts: arrayUnion(postId) }, { merge: true });
     //TODO: add post details  to posts
     await setDoc(postRef, {
-      uid: user.uid,
+      name: user.displayName,
       images: imageURLS,
       date: serverTimestamp(),
       caption: caption,

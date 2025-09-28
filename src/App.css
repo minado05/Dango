@@ -164,3 +164,60 @@ a {
   background: none;
   border: none;
 }
+
+.post-container {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  height: fit-content;
+  border: 1px solid black;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 10px;
+  gap: 10px;
+}
+
+.post-image {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+#search-results-container {
+  margin: 20px;
+  gap: 20px;
+  display: flex;
+}
+
+.post-profile-circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid black;
+}
+
+.post-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.likes {
+  background: none;
+  display: flex;
+  align-items: center;
+  height: fit-content;
+  padding: 0;
+  border: none;
+  gap: 5px;
+}
+
+.likes > svg {
+  font-size: 20px;
+  margin: 0;
+  padding: 0;
+}

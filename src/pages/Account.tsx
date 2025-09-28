@@ -23,7 +23,6 @@ function Account() {
             <div className="profile-circle"></div>
             <div className="description">
               <div id="name">name: {user ? user.displayName : "error"}</div>
-              <div id="uid">uid: {user ? user.uid : "error"}</div>
               <div id="bio">bio: </div>
             </div>
           </div>
@@ -34,7 +33,7 @@ function Account() {
       </div>
       <hr></hr>
       <div className="nav bot">
-        <div id="my-posts">My Itineraries</div>
+        <div id="my-posts">My Posts</div>
         <div id="saves">Saved</div>
       </div>
       <div className="grid">

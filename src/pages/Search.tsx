@@ -3,15 +3,16 @@ import NavBar from "../components/NavBar";
 import { useEffect, useState } from "react";
 import { db } from "../firebase";
 import { collection, getDocs, query, Timestamp, where } from "firebase/firestore";
-import Post from "../components/Post";
+import PostCard from "../components/PostCard";
 const postRef = collection(db, "posts");
 
 interface PostDetails {
-  username: string;
+  name: string;
   images: string[];
   location: string;
   caption: string;
   date: Timestamp;
+  likes: number;
 }
 
 function Search() {
@@ -27,11 +28,12 @@ function Search() {
       querySnapshot.forEach((doc) => {
         const post = doc.data();
         postArray.push({
-          username: doc.id,
+          name: post.name,
           images: post.images,
           location: post.location,
           caption: post.caption,
           date: post.date,
+          likes: post.likes,
         });
       });
       setResultList(postArray);
@@ -42,9 +44,9 @@ function Search() {
   return (
     <>
       <NavBar />
-      <div>
+      <div id="search-results-container">
         {resultList.map((post) => (
-          <Post post={post} />
+          <PostCard post={post} />
         ))}
       </div>
     </>

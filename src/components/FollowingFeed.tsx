@@ -13,6 +13,8 @@ interface PostDetails {
   likes: number;
   postId: string;
   postuid: string;
+  profilePic: string;
+  coverPic: string;
 }
 
 function FollowingFeed() {
@@ -59,6 +61,8 @@ function FollowingFeed() {
               likes: postData.likes,
               postId: id,
               postuid: postData.uid,
+              profilePic: postData.profilePic,
+              coverPic: postData.coverPic,
             });
           }
         }

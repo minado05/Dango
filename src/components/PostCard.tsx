@@ -23,6 +23,8 @@ export interface PostDetails {
   likes: number;
   postId: string;
   postuid: string;
+  profilePic: string;
+  coverPic: string;
 }
 
 // Define the props for your component
@@ -37,21 +39,9 @@ function PostCard({ post }: PostProps) {
   const [likes, setLikes] = useState(post.likes);
   const user = auth.currentUser;
   const uid = user ? user.uid : null;
-  const [profilePic, setProfilePic] = useState<string>();
-  //get profile pic of the post
-  useEffect(() => {
-    const getProfilePic = async () => {
-      const profileSnap = await getDoc(doc(db, "users", post.postuid));
-      if (profileSnap.exists()) {
-        const profile = profileSnap.data();
-        setProfilePic(profile.image);
-      }
-    };
-    getProfilePic();
-  });
   //check if saved
   useEffect(() => {
-    if (uid == null) {
+    if (uid == null || !post) {
       return;
     }
     const checkSaved = async () => {
@@ -59,7 +49,7 @@ function PostCard({ post }: PostProps) {
       setSaved(docSnap.exists());
     };
     checkSaved();
-  }, [post.postId, uid, profilePic]);
+  }, [post, uid]);
 
   const toggleSaved = async (postId: string) => {
     if (uid == null) {
@@ -88,7 +78,7 @@ function PostCard({ post }: PostProps) {
       <div className="post-top-bar">
         <div className="user-info">
           <img
-            src={profilePic}
+            src={post.profilePic}
             className="post-profile-circle"
             onClick={() => navigate(`/account/${post.postuid}`)}
           />
@@ -102,7 +92,7 @@ function PostCard({ post }: PostProps) {
         </div>
       </div>
       <div className="post-bottom-bar" onClick={() => navigate(`/post/${post.postId}`)}>
-        <img className="post-image" src={post.images[0]} alt={post.caption} />
+        <img className="post-image" src={post.coverPic} alt="cover picture" />
         <div>{post.caption}</div>
         <div>{post.date.toDate().toLocaleString()}</div>
         <div>{post.location}</div>

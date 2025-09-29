@@ -279,15 +279,15 @@ input[type="file"] {
 .post-page-container {
   margin: 0 10vw;
   width: 80vw;
-  height: 100vh;
+  height: fit-content;
   display: flex;
   justify-content: space-between;
+  border: 1px solid black;
 }
 
 .post-side {
   width: 50%;
   height: 100%;
-  border: 1px solid black;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -296,4 +296,8 @@ input[type="file"] {
 .post-side.left > img {
   width: 100%;
   object-fit: cover;
+}
+
+.po .caption {
+  white-space: "pre-wrap";
 }

@@ -30,8 +30,7 @@ function Account() {
 
   //get profile
   useEffect(() => {
-    if (user == null || profileId == null) return;
-    if (user.uid == profileId) setIsUser(true);
+    if (profileId == null) return;
     const getProfile = async () => {
       const profileRef = doc(db, "users", profileId);
       const profileSnap = await getDoc(profileRef);
@@ -43,7 +42,14 @@ function Account() {
       }
     };
     getProfile();
-  }, [profileId, user]);
+  }, [profileId]);
+
+  useEffect(() => {
+    if (user && profileId) {
+      setIsUser(user.uid === profileId);
+    }
+  }, [user, profileId]);
+
   const handleSignOut = () => {
     signOut(auth);
     alert("Sign out successful!");
@@ -51,7 +57,11 @@ function Account() {
   };
 
   const handleFollow = async () => {
-    if (user == null || profileId == null) return;
+    if (user == null) {
+      alert("Please sign in to follow!");
+      return;
+    }
+    if (profileId == null) return;
     const followingRef = doc(db, "users", user.uid, "following", profileId);
     await setDoc(followingRef, {});
     alert("Follow successful!");

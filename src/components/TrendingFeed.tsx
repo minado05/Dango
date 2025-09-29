@@ -12,6 +12,8 @@ interface PostDetails {
   likes: number;
   postId: string;
   postuid: string;
+  profilePic: string;
+  coverPic: string;
 }
 
 function TrendingFeed() {
@@ -33,6 +35,8 @@ function TrendingFeed() {
           likes: post.likes,
           postId: doc.id,
           postuid: post.uid,
+          profilePic: post.profilePic,
+          coverPic: post.coverPic,
         });
       });
       setTrendingList(trendArray);

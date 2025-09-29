@@ -1,6 +1,6 @@
 import { useState } from "react";
 import NavBar from "../components/NavBar";
-import { arrayUnion, collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { collection, doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
 import { auth, db, storage } from "../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { AiOutlineCloseSquare } from "react-icons/ai";
@@ -44,7 +44,15 @@ const AddPost = () => {
     const user = auth.currentUser;
     if (!user) return;
     const userRef = doc(db, "users", user.uid);
-    await setDoc(userRef, { posts: arrayUnion(postId) }, { merge: true });
+    const userPostRef = doc(db, "users", user.uid, "posts", postId);
+    await setDoc(userPostRef, {});
+    //get profile pic
+    const userDocSnap = await getDoc(userRef);
+    let profilePicURL = "";
+    if (userDocSnap.exists()) {
+      const data = userDocSnap.data();
+      profilePicURL = data.image;
+    }
     //TODO: add post details  to posts
     await setDoc(postRef, {
       name: user.displayName,
@@ -52,7 +60,12 @@ const AddPost = () => {
       date: serverTimestamp(),
       caption: caption,
       location: location,
+      likes: 0,
+      profilePic: profilePicURL,
+      coverPic: imageURLS[0],
+      uid: user.uid,
     });
+
     alert("Post uploaded successful!");
     //TODO: reset form
     setImages([]);
@@ -98,7 +111,7 @@ const AddPost = () => {
           ))}
         </select>
         <label>Add Caption: </label>
-        <textarea value={caption} onChange={handleCaptionChange} />
+        <textarea className="caption" value={caption} onChange={handleCaptionChange} />
         <button type="submit">upload</button>
       </form>
     </div>

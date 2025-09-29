@@ -29,6 +29,19 @@ export interface PostDetails {
 function Post() {
   const [user, setUser] = useState<User | null>(null);
   const navigate = useNavigate();
+  const [profilePic, setProfilePic] = useState<string>();
+  //get profile pic of the post
+  useEffect(() => {
+    if (post == null) return;
+    const getProfilePic = async () => {
+      const profileSnap = await getDoc(doc(db, "users", post.postuid));
+      if (profileSnap.exists()) {
+        const profile = profileSnap.data();
+        setProfilePic(profile.image);
+      }
+    };
+    getProfilePic();
+  });
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -39,16 +52,7 @@ function Post() {
 
   const [saved, setSaved] = useState(false);
   const params = useParams<{ postId: string }>();
-  const [post, setPost] = useState<PostDetails>({
-    likes: 0,
-    name: "",
-    images: [],
-    location: "",
-    caption: "",
-    date: new Timestamp(0, 0), // example default
-    postId: "",
-    postuid: "",
-  });
+  const [post, setPost] = useState<PostDetails | null>(null);
   const postId = params.postId;
 
   useEffect(() => {
@@ -74,20 +78,26 @@ function Post() {
   }, [postId]);
 
   const toggleSaved = async () => {
-    if (user == null) return;
+    if (user == null || post == null) return;
     const postRef = doc(db, "posts", post.postId);
     if (!saved) {
       await updateDoc(postRef, {
         likes: increment(1),
       });
       await setDoc(doc(db, "users", user.uid, "saved", post.postId), {});
-      setPost((prev) => ({ ...prev, likes: prev.likes + 1 }));
+      setPost((prev) => {
+        if (!prev) return null;
+        return { ...prev, likes: prev.likes + 1 };
+      });
     } else {
       await deleteDoc(doc(db, "users", user.uid, "saved", post.postId));
       await updateDoc(postRef, {
         likes: increment(-1),
       });
-      setPost((prev) => ({ ...prev, likes: prev.likes - 1 }));
+      setPost((prev) => {
+        if (!prev) return null;
+        return { ...prev, likes: prev.likes - 1 };
+      });
       console.log("here");
     }
     setSaved(!saved);
@@ -105,13 +115,13 @@ function Post() {
             <div className="post-side right">
               <div className="user-info">
                 <img
-                  src={post.images[0]}
+                  src={profilePic}
                   className="post-profile-circle"
                   onClick={() => navigate(`/account/${post.postuid}`)}
                 />
                 <div>{post.name}</div>
               </div>
-              <div>{post.caption}</div>
+              <div className="caption">{post.caption}</div>
               <div>{post.date.toDate().toLocaleString()}</div>
               <div>{post.location}</div>
               <div className="likes">
@@ -123,7 +133,7 @@ function Post() {
             </div>
           </div>
         ) : (
-          <div>Error fetching post</div>
+          <div>Loading...</div>
         )}
       </div>
     </>

@@ -275,3 +275,25 @@ input[type="file"] {
   border: 1px solid black;
   background: #efefef;
 }
+
+.post-page-container {
+  margin: 0 10vw;
+  width: 80vw;
+  height: 100vh;
+  display: flex;
+  justify-content: space-between;
+}
+
+.post-side {
+  width: 50%;
+  height: 100%;
+  border: 1px solid black;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.post-side.left > img {
+  width: 100%;
+  object-fit: cover;
+}

@@ -66,8 +66,9 @@ function PostCard({ post }: PostProps) {
       alert("Please sign in to save!");
       return;
     }
+    const postRef = doc(db, "posts", postId);
+
     if (!saved) {
-      const postRef = doc(db, "posts", postId);
       await updateDoc(postRef, {
         likes: increment(1),
       });
@@ -75,6 +76,9 @@ function PostCard({ post }: PostProps) {
       setLikes(likes + 1);
     } else {
       await deleteDoc(doc(db, "users", uid, "saved", postId));
+      await updateDoc(postRef, {
+        likes: increment(-1),
+      });
       setLikes(likes - 1);
     }
     setSaved(!saved);

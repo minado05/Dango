@@ -277,7 +277,7 @@ input[type="file"] {
 }
 
 .post-page-container {
-  margin: 0 10vw;
+  margin: 2vh 10vw;
   width: 80vw;
   height: fit-content;
   display: flex;
@@ -293,9 +293,49 @@ input[type="file"] {
   flex-direction: column;
 }
 
+.post-side.right {
+  padding: 2vh 2vw;
+  gap: 10px;
+}
+
+.post-side.left {
+  position: relative;
+}
+
+#back-button,
+#forward-button {
+  position: absolute;
+  z-index: 1;
+  width: fit-content;
+  height: fit-content;
+  top: 50%;
+}
+
+#image-index {
+  position: absolute;
+  font-size: 20px;
+  top: 0;
+  right: 10px;
+  color: white;
+  z-index: 2;
+}
+
+#forward-button {
+  right: 0;
+}
+
+.img-nav-icon {
+  width: 30px;
+  height: 30px;
+  color: var(--background-color);
+  border-radius: 50%;
+  background: rgb(40, 30, 10, 0.5);
+}
+
 .post-side.left > img {
   width: 100%;
   object-fit: cover;
+  z-index: 0;
 }
 
 .po .caption {

@@ -14,6 +14,7 @@ import {
 import { FaHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
 import { onAuthStateChanged, type User } from "firebase/auth";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 export interface PostDetails {
   name: string;
@@ -27,6 +28,7 @@ export interface PostDetails {
 }
 
 function Post() {
+  const [imageIndex, setImageIndex] = useState(0);
   const [user, setUser] = useState<User | null>(null);
   const navigate = useNavigate();
   const [profilePic, setProfilePic] = useState<string>();
@@ -77,8 +79,24 @@ function Post() {
     getPost();
   }, [postId]);
 
+  //check if saved
+  useEffect(() => {
+    if (user == null || post === null) {
+      return;
+    }
+    const checkSaved = async () => {
+      const docSnap = await getDoc(doc(db, "users", user.uid, "saved", post.postId));
+      setSaved(docSnap.exists());
+    };
+    checkSaved();
+  }, [user, post]);
+
   const toggleSaved = async () => {
-    if (user == null || post == null) return;
+    if (post == null) return;
+    if (user == null) {
+      alert("Please sign in to save!");
+      return;
+    }
     const postRef = doc(db, "posts", post.postId);
     if (!saved) {
       await updateDoc(postRef, {
@@ -103,6 +121,17 @@ function Post() {
     setSaved(!saved);
   };
 
+  const forward = () => {
+    if (post == null) return;
+    if (imageIndex == post.images.length - 1) return;
+    setImageIndex(imageIndex + 1);
+  };
+
+  const backward = () => {
+    if (imageIndex == 0) return;
+    setImageIndex(imageIndex - 1);
+  };
+
   return (
     <>
       <NavBar />
@@ -110,7 +139,16 @@ function Post() {
         {post ? (
           <div className="post-page-container">
             <div className="post-side left">
-              <img src={post.images[0]} alt={post.caption} />
+              <div id="image-index">
+                {imageIndex + 1}/{post.images.length}
+              </div>
+              <div id="back-button" onClick={backward}>
+                <IoIosArrowBack className="img-nav-icon" />
+              </div>
+              <div id="forward-button" onClick={forward}>
+                <IoIosArrowForward className="img-nav-icon" />{" "}
+              </div>
+              <img src={post.images[imageIndex]} alt={post.caption} />
             </div>
             <div className="post-side right">
               <div className="user-info">

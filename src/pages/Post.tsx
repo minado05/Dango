@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import { useEffect, useState } from "react";
 import { auth, db } from "../firebase";
@@ -28,6 +28,7 @@ export interface PostDetails {
 
 function Post() {
   const [user, setUser] = useState<User | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -102,7 +103,14 @@ function Post() {
               <img src={post.images[0]} alt={post.caption} />
             </div>
             <div className="post-side right">
-              <div>Profile circle</div>
+              <div className="user-info">
+                <img
+                  src={post.images[0]}
+                  className="post-profile-circle"
+                  onClick={() => navigate(`/account/${post.postuid}`)}
+                />
+                <div>{post.name}</div>
+              </div>
               <div>{post.caption}</div>
               <div>{post.date.toDate().toLocaleString()}</div>
               <div>{post.location}</div>

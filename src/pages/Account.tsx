@@ -1,5 +1,5 @@
 import { IoIosArrowBack } from "react-icons/io";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { auth, db } from "../firebase";
 import { onAuthStateChanged, signOut, type User } from "firebase/auth";
 import { useEffect, useState } from "react";
@@ -67,11 +67,9 @@ function Account() {
 
   return (
     <>
-      <div className="back-arrow">
-        <Link to="/">
-          <IoIosArrowBack />
-          Home
-        </Link>
+      <div className="back-arrow" onClick={() => navigate(-1)}>
+        <IoIosArrowBack />
+        Back
       </div>
       <div id="profile-banner">
         <div id="profile-wrap">

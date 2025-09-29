@@ -3,6 +3,7 @@ import NavBar from "../components/NavBar";
 import { arrayUnion, collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { auth, db, storage } from "../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { AiOutlineCloseSquare } from "react-icons/ai";
 
 const AddPost = () => {
   const [images, setImages] = useState<{ file: File; preview: string }[]>([]);
@@ -57,24 +58,28 @@ const AddPost = () => {
     setLocation("");
   };
   return (
-    <div id="post-form">
+    <div id="post-form-container">
       <NavBar />
-      <h2>Add Post</h2>
-      <form onSubmit={handleSubmit}>
+      <form id="post-form" onSubmit={handleSubmit}>
+        <h1>Add Post</h1>
         <label>Choose images: </label>
         <input type="file" onChange={handleImageUpload} />
-        <div className="image-container">
+        <div className="images-container">
           {images.map((image, i) => {
             return (
               <div key={i}>
-                <img src={image.preview} alt="preview" />
-                <div
-                  onClick={() => {
-                    setImages(images.filter((storedImage) => storedImage != image));
-                  }}
-                >
-                  X
+                <div className="image-topbar">
+                  <div
+                    className="delete-img"
+                    onClick={() => {
+                      setImages(images.filter((storedImage) => storedImage != image));
+                    }}
+                  >
+                    <AiOutlineCloseSquare />
+                  </div>
+                  <div>{i + 1}</div>
                 </div>
+                <img className="preview-img" src={image.preview} alt={`image ${i} preview`} />
               </div>
             );
           })}

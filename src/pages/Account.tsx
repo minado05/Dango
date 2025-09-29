@@ -1,36 +1,38 @@
 import { IoIosArrowBack } from "react-icons/io";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { auth, db } from "../firebase";
-import { signOut } from "firebase/auth";
+import { onAuthStateChanged, signOut, type User } from "firebase/auth";
 import { useEffect, useState } from "react";
-import { collection, getDocs, getDoc, doc, type Timestamp, setDoc } from "firebase/firestore";
-import PostCard from "../components/PostCard";
-
-interface PostDetails {
-  name: string;
-  images: string[];
-  location: string;
-  caption: string;
-  date: Timestamp;
-  likes: number;
-  postId: string;
-  postuid: string;
-}
+import { getDoc, doc, setDoc } from "firebase/firestore";
+import MyPosts from "../components/MyPosts";
+import Saved from "../components/Saved";
 
 function Account() {
-  const user = auth.currentUser;
+  const [user, setUser] = useState<User | null>(null);
+
+  //listen for user change
+  useEffect(() => {
+    //notifies if user changes
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe(); // cleanup listener
+  }, []);
+
   const params = useParams<{ profileId: string }>();
   const profileId = params.profileId;
-  const [posts, setPosts] = useState<PostDetails[]>([]);
   const [isUser, setIsUser] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
   const [profileName, setProfileName] = useState("");
   const [profileBio, setProfileBio] = useState("");
   const [profileImage, setProfileImage] = useState<string>();
   const navigate = useNavigate();
+
+  //get profile
   useEffect(() => {
     if (user == null || profileId == null) return;
     if (user.uid == profileId) setIsUser(true);
-    const getPosts = async () => {
+    const getProfile = async () => {
       const profileRef = doc(db, "users", profileId);
       const profileSnap = await getDoc(profileRef);
       if (profileSnap.exists()) {
@@ -39,33 +41,8 @@ function Account() {
         setProfileBio(profile.bio);
         setProfileImage(profile.image);
       }
-      const postIdsRef = collection(profileRef, "posts");
-      const queryPostIdSnapshot = await getDocs(postIdsRef);
-      const postIdArray: string[] = [];
-      queryPostIdSnapshot.forEach((post) => {
-        postIdArray.push(post.id);
-      });
-      const postArray: PostDetails[] = [];
-      for (const id of postIdArray) {
-        const postRef = doc(db, "posts", id);
-        const postSnap = await getDoc(postRef);
-        if (postSnap.exists()) {
-          const postData = postSnap.data();
-          postArray.push({
-            name: postData.name,
-            images: postData.images,
-            location: postData.location,
-            caption: postData.caption,
-            date: postData.date,
-            likes: postData.likes,
-            postId: id,
-            postuid: postData.uid,
-          });
-        }
-      }
-      setPosts(postArray);
     };
-    getPosts();
+    getProfile();
   }, [profileId, user]);
   const handleSignOut = () => {
     signOut(auth);
@@ -78,6 +55,14 @@ function Account() {
     const followingRef = doc(db, "users", user.uid, "following", profileId);
     await setDoc(followingRef, {});
     alert("Follow successful!");
+  };
+
+  const toggleSaved = () => {
+    if (!isSaved) setIsSaved(true);
+  };
+
+  const toggleMyPosts = () => {
+    if (isSaved) setIsSaved(false);
   };
 
   return (
@@ -108,14 +93,14 @@ function Account() {
       </div>
       <hr></hr>
       <div className="nav bot">
-        <div id="my-posts">My Posts</div>
-        <div id="saves">Saved</div>
+        <button onClick={toggleMyPosts} className="feed-buttons">
+          My Posts
+        </button>
+        <button onClick={toggleSaved} className="feed-buttons">
+          Saved
+        </button>
       </div>
-      <div className="post-grid">
-        {posts.map((post) => (
-          <PostCard key={post.postId} post={post} />
-        ))}
-      </div>
+      {isSaved ? <Saved profileId={profileId || ""} /> : <MyPosts profileId={profileId || ""} />}
     </>
   );
 }

@@ -18,12 +18,12 @@ interface Props {
   profileId: string;
 }
 
-function Saved({ profileId }: Props) {
+function MyPosts({ profileId }: Props) {
   const [posts, setPosts] = useState<PostDetails[]>([]);
   useEffect(() => {
     const getPosts = async () => {
       const profileRef = doc(db, "users", profileId);
-      const postIdsRef = collection(profileRef, "saved");
+      const postIdsRef = collection(profileRef, "posts");
       const queryPostIdSnapshot = await getDocs(postIdsRef);
       const postIdArray: string[] = [];
       queryPostIdSnapshot.forEach((post) => {
@@ -63,4 +63,4 @@ function Saved({ profileId }: Props) {
   );
 }
 
-export default Saved;
+export default MyPosts;

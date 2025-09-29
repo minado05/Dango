@@ -97,10 +97,12 @@ function PostCard({ post }: PostProps) {
           <div>{likes}</div>
         </div>
       </div>
-      <img className="post-image" src={post.images[0]} alt={post.caption} />
-      <div>{post.caption}</div>
-      <div>{post.date.toDate().toLocaleString()}</div>
-      <div>{post.location}</div>
+      <div className="post-bottom-bar" onClick={() => navigate(`/post/${post.postId}`)}>
+        <img className="post-image" src={post.images[0]} alt={post.caption} />
+        <div>{post.caption}</div>
+        <div>{post.date.toDate().toLocaleString()}</div>
+        <div>{post.location}</div>
+      </div>
     </div>
   );
 }

@@ -8,6 +8,7 @@ import Search from "./pages/Search";
 
 import { Routes, Route } from "react-router-dom";
 import UpdateProfile from "./pages/UpdateProfile";
+import Post from "./pages/Post";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <Route path="/addpost" element={<AddPost />} />
       <Route path="/search" element={<Search />} />
       <Route path="/updateprofile" element={<UpdateProfile />} />
+      <Route path="/post/:postId" element={<Post />} />
     </Routes>
   );
 }

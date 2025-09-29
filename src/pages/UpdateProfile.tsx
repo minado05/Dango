@@ -58,8 +58,10 @@ function UpdateProfile() {
       </div>
       <form className="form" onSubmit={handleSubmit}>
         <h2>Update Profile</h2>
-        <label>Choose Profile Image: </label>
-        <input onChange={handleImageUpload} type="file" />
+        <label htmlFor="profile-pic-upload" className="upload-img-button">
+          Choose Profile Image
+        </label>
+        <input id="profile-pic-upload" onChange={handleImageUpload} type="file" />
         <label>Bio: </label>
         <textarea value={bio} onChange={handleBioChange} />
         <button type="submit">Update</button>

@@ -4,11 +4,13 @@ import { arrayUnion, collection, doc, serverTimestamp, setDoc } from "firebase/f
 import { auth, db, storage } from "../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { AiOutlineCloseSquare } from "react-icons/ai";
+import { cities } from "../data/locations";
 
 const AddPost = () => {
   const [images, setImages] = useState<{ file: File; preview: string }[]>([]);
   const [location, setLocation] = useState("");
   const [caption, setCaption] = useState("");
+  const cityOptions = Object.values(cities).flat();
   const imageURLS: string[] = [];
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,7 +24,7 @@ const AddPost = () => {
     setCaption(e.target.value);
   };
 
-  const handleLocationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setLocation(e.target.value);
   };
 
@@ -62,8 +64,10 @@ const AddPost = () => {
       <NavBar />
       <form id="post-form" onSubmit={handleSubmit}>
         <h1>Add Post</h1>
-        <label>Choose images: </label>
-        <input type="file" onChange={handleImageUpload} />
+        <label htmlFor="image-upload" className="upload-img-button">
+          Choose Images
+        </label>
+        <input id="image-upload" type="file" onChange={handleImageUpload} />
         <div className="images-container">
           {images.map((image, i) => {
             return (
@@ -85,13 +89,14 @@ const AddPost = () => {
           })}
         </div>
         <label>Add location: </label>
-        <input
-          value={location}
-          type="text"
-          placeholder="add location..."
-          onChange={handleLocationChange}
-          required
-        />
+        <select onChange={handleLocationChange}>
+          <option value="">Select a city</option>
+          {cityOptions.map((city) => (
+            <option key={city} value={city}>
+              {city}
+            </option>
+          ))}
+        </select>
         <label>Add Caption: </label>
         <textarea value={caption} onChange={handleCaptionChange} />
         <button type="submit">upload</button>

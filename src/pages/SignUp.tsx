@@ -53,7 +53,10 @@ function SignUp() {
           formData.password
         );
         await updateProfile(userCredential.user, { displayName: formData.name });
-        await setDoc(doc(db, "users", userCredential.user.uid), { name: formData.name });
+        await setDoc(doc(db, "users", userCredential.user.uid), {
+          name: formData.name,
+          image: "/defaultprofilepic.png",
+        });
         navigate("/");
         alert("Account created successfully!");
         setFormData({ name: "", email: "", password: "", confirmPassword: "" });

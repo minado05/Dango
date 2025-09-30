@@ -40,7 +40,7 @@ const AddPost = () => {
       const url = await getDownloadURL(storageRef);
       imageURLS.push(url);
     }
-    //TODO: add postid to user, and posts
+    //add postid to user, and posts
     const user = auth.currentUser;
     if (!user) return;
     const userRef = doc(db, "users", user.uid);
@@ -53,7 +53,7 @@ const AddPost = () => {
       const data = userDocSnap.data();
       profilePicURL = data.image;
     }
-    //TODO: add post details  to posts
+    //add post details  to posts
     await setDoc(postRef, {
       name: user.displayName,
       images: imageURLS,

@@ -1,9 +1,10 @@
 import NavBar from "../components/NavBar";
 import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
 import { useState } from "react";
 import { FirebaseError } from "firebase/app";
+import { setDoc, doc } from "firebase/firestore";
 
 interface formData {
   name: string;
@@ -52,7 +53,8 @@ function SignUp() {
           formData.password
         );
         await updateProfile(userCredential.user, { displayName: formData.name });
-        navigate("/account");
+        await setDoc(doc(db, "users", userCredential.user.uid), { name: formData.name });
+        navigate("/");
         alert("Account created successfully!");
         setFormData({ name: "", email: "", password: "", confirmPassword: "" });
         setErrors({});

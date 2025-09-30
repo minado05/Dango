@@ -188,7 +188,9 @@ a {
 .post-grid {
   margin: 20px;
   gap: 20px;
+  width: 100vw;
   display: flex;
+  flex-wrap: wrap;
 }
 
 .post-profile-circle {
@@ -196,6 +198,7 @@ a {
   height: 30px;
   border-radius: 50%;
   border: 1px solid black;
+  object-fit: cover;
 }
 
 .post-top-bar {

@@ -5,8 +5,9 @@ import { doc, updateDoc } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
 import { onAuthStateChanged, type User } from "firebase/auth";
-
+import { useNavigate } from "react-router-dom";
 function UpdateProfile() {
+  const navigate = useNavigate();
   const [image, setImage] = useState<{ file: File; preview: string }>();
   const [bio, setBio] = useState<string>();
   const [user, setUser] = useState<User | null>(null);
@@ -47,6 +48,8 @@ function UpdateProfile() {
         bio: bio,
       });
     }
+    alert("Profile updated!");
+    navigate(`/account/${user.uid}`);
   };
   return (
     <div>
@@ -62,6 +65,7 @@ function UpdateProfile() {
           Choose Profile Image
         </label>
         <input id="profile-pic-upload" onChange={handleImageUpload} type="file" />
+        {image && <img className="preview-img" src={image.preview} alt="image preview" />}
         <label>Bio: </label>
         <textarea value={bio} onChange={handleBioChange} />
         <button type="submit">Update</button>

@@ -148,7 +148,8 @@ a {
 .form {
   display: flex;
   width: 500px;
-  height: 300px;
+  min-height: 300px;
+  height: fit-content;
   margin: auto;
   flex-direction: column;
   align-items: center;
@@ -339,5 +340,5 @@ input[type="file"] {
 }
 
 .po .caption {
-  white-space: "pre-wrap";
+  white-space: pre-wrap;
 }

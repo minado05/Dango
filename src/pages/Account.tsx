@@ -77,9 +77,9 @@ function Account() {
 
   return (
     <>
-      <div className="back-arrow" onClick={() => navigate(-1)}>
+      <div className="back-arrow" onClick={() => navigate("/")}>
         <IoIosArrowBack />
-        Back
+        Home
       </div>
       <div id="profile-banner">
         <div id="profile-wrap">
